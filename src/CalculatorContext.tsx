@@ -1,6 +1,4 @@
-import React, { createContext, useContext, useReducer } from "react";
-
-const CalculatorContext = createContext();
+import { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
   displayValue: "0",
@@ -8,6 +6,8 @@ const initialState = {
   firstOperand: null,
   waitingForSecondOperand: false,
 };
+
+const CalculatorContext = createContext(initialState);
 
 const calculatorReducer = (state, action) => {
   switch (action.type) {
@@ -56,10 +56,10 @@ const calculatorReducer = (state, action) => {
 
 const CalculatorProvider = ({ children }) => {
   const [state, dispatch] = useReducer(calculatorReducer, initialState);
-
   const value = { state, dispatch };
 
   return (
+    // @ts-ignore
     <CalculatorContext.Provider value={value}>
       {children}
     </CalculatorContext.Provider>
@@ -67,11 +67,7 @@ const CalculatorProvider = ({ children }) => {
 };
 
 const useCalculator = () => {
-  const context = useContext(CalculatorContext);
-  if (!context) {
-    throw new Error("useCalculator must be used within a CalculatorProvider");
-  }
-  return context;
+  return useContext(CalculatorContext);
 };
 
 const calculate = (firstOperand, secondOperand, operator) => {

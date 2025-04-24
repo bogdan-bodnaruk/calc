@@ -1,7 +1,7 @@
-import React from "react";
-import { useCalculator } from "./CalculatorContext";
+import { useCalculator } from './CalculatorContext';
 
 const Calculator = () => {
+  // @ts-ignore
   const { state, dispatch } = useCalculator();
 
   const handleInputNumber = (number) => {
